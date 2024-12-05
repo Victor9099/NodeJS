@@ -1,4 +1,6 @@
 import express from 'express'
+import cors from 'cors'
+import { corsOptions } from './config/cors'
 import AsyncExitHook from 'async-exit-hook'
 import { mapOrder } from '~/utils/sorts.js'
 import { CONNECT_DB, GET_DB, CLOSE_DB } from './config/mongodb'
@@ -7,13 +9,14 @@ import { APIs_V1 } from './routes/v1'
 import { errorHandlingMiddleware } from './middlewares/errorHandlingMiddleware'
 const START_SERVER = () => {
   const app = express()
-  
+
+  app.use(cors(corsOptions))
   // enable json.data
   app.use(express.json())
-  
+
   //Su dung APi v1
   app.use('/v1', APIs_V1)
-  
+
   //Middleware xu ly loi
   app.use(errorHandlingMiddleware)
 

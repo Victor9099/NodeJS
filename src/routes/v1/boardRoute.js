@@ -11,7 +11,14 @@ const Router = express.Router()
 
 Router.route('/')
   .get((req, res) => {
-    res.status(StatusCodes.OK).json({message: 'API get new post'})
+    res.status(StatusCodes.OK).json({ message: 'API get new post' })
   })
   .post(boardValidation.createNew, boardController.createNew)
+Router.route('/:id')
+  .get(boardController.getDetails)
+  .put(boardValidation.update, boardController.update)
+
+//Api ho tro di chuyen card
+Router.route('/supports/moving_card')
+  .put(boardValidation.moveCardToDifferentColumn, boardController.moveCardToDifferentColumn)
 export const boardRoute = Router
